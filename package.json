@@ -1,0 +1,23 @@
+{
+  "name": "matrix-room-deletor",
+  "version": "1.0.0",
+  "description": "Delete multiple Matrix rooms using the Synapse Admin API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Twi1ightSparkle/matrix-room-deletor.git"
+  },
+  "author": "Twilight Sparkle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Twi1ightSparkle/matrix-room-deletor/issues"
+  },
+  "homepage": "https://github.com/Twi1ightSparkle/matrix-room-deletor#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "sleep": "^6.3.0"
+  }
+}

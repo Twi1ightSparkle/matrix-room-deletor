@@ -1,0 +1,5 @@
+{
+    "adminToken": "syt_abcd",
+    "serverUrl": "synapse.example.com",
+    "userToken": "syt_efgh"
+}
