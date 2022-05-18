@@ -49,7 +49,7 @@ rooms.forEach(async (room) => {
             message: 'Error deleting room',
             error: err,
         });
-        fs.writeFileSync(logFile, JSON.stringify(deletedRooms));
+        fs.writeFileSync(logFile, JSON.stringify(deletedRooms, undefined, 4));
     }
 
     data = result?.data ? result.data : null;
@@ -69,7 +69,7 @@ rooms.forEach(async (room) => {
                     message: 'Error getting delete status',
                     error: err,
                 });
-                fs.writeFileSync(logFile, JSON.stringify(deletedRooms));
+                fs.writeFileSync(logFile, JSON.stringify(deletedRooms, undefined, 4));
             }
 
             data = result?.data;
@@ -82,5 +82,5 @@ rooms.forEach(async (room) => {
         message: 'Successfully deleted room',
         result: data,
     });
-    fs.writeFileSync(logFile, JSON.stringify(deletedRooms));
+    fs.writeFileSync(logFile, JSON.stringify(deletedRooms, undefined, 4));
 });
