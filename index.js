@@ -57,8 +57,9 @@ const adminApi = async (verb, task, method, endpoint, payload = {}) => {
     let result, data;
     const dataDefault = {
         time: new Date(),
-        endpoint: `${method.toUpperCase()} ${endpoint} ` +
-        `${JSON.stringify(payload)}`,
+        endpoint:
+            `${method.toUpperCase()} ${endpoint} ` +
+            `${JSON.stringify(payload)}`,
     };
 
     try {
@@ -95,7 +96,11 @@ const adminApi = async (verb, task, method, endpoint, payload = {}) => {
             data: err,
         };
         console.log(
-            `Error ${verb[1]} ${task} - ${err}. ${JSON.stringify(data, null, 4)}`,
+            `Error ${verb[1]} ${task} - ${err}. ${JSON.stringify(
+                data,
+                null,
+                4,
+            )}`,
         );
     }
 
