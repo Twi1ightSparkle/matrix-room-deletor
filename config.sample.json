@@ -1,5 +1,10 @@
 {
     "adminToken": "syt_abcd",
-    "serverUrl": "synapse.example.com",
+    "doNotDeleteRoom": false,
+    "mmrQuarantineRoomMedia": true,
+    "mmrSharedSecret": "secret",
+    "saveRoomMembers": true,
+    "saveRoomState": true,
+    "serverUrl": "https://synapse.example.com",
     "userToken": "syt_efgh"
 }
