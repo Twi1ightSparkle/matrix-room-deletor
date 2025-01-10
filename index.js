@@ -39,12 +39,7 @@ const synapseAdmin = axios.create({ baseURL: serverUrl });
  * @param {Number} seconds Number of seconds to sleep
  */
 const sleep = (seconds) => {
-    Atomics.wait(
-        new Int32Array(new SharedArrayBuffer(4)),
-        0,
-        0,
-        seconds * 1000,
-    );
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, seconds * 1000);
 };
 
 /**
@@ -58,24 +53,19 @@ const capitalizeFirstLetter = (string) => {
 
 /**
  * Make a call to the Synapse (media repo) admin API
- * @param {Array} verb          The verb for action taken [past, present].
- *                              For example: ['got', 'getting']
- * @param {String} task         The task being done
- *                              For example: 'room summary'
+ * @param {Array}  verb         The verb for action taken [past, present] For example: ['got', 'getting']
+ * @param {String} task         The task being done. For example: 'room summary'
  * @param {String} method       The HTTP method to use
  * @param {String} endpoint     The endpoint to call
  * @param {Object} payload      Optional payload. Defaults to empty
- * @returns {Object}            Result including timestamp, status, message, and
- *                              data containing either the result data or error
- *                              information
+ * @returns {Object}            Result including timestamp, status, message, and data containing either the result data
+ *                              or error information
  */
 const adminApi = async (verb, task, method, endpoint, payload = {}) => {
     let result, data;
     const dataDefault = {
         time: new Date(),
-        endpoint:
-            `${method.toUpperCase()} ${endpoint} ` +
-            `${JSON.stringify(payload)}`,
+        endpoint: `${method.toUpperCase()} ${endpoint} ${JSON.stringify(payload)}`,
     };
 
     const firstWord = capitalizeFirstLetter(verb[1]);
@@ -114,9 +104,7 @@ const adminApi = async (verb, task, method, endpoint, payload = {}) => {
             message: `Error ${verb[1]} ${task}`,
             data: err,
         };
-        console.log(
-            `Error ${verb[1]} ${task} - ${err}. See the log for more details.`,
-        );
+        console.log(`Error ${verb[1]} ${task} - ${err}. See the log for more details.`);
     }
 
     return data;
@@ -139,8 +127,7 @@ const writeLog = (content) => {
 const timeRemaining = (total, counter) => {
     const roomsRemaining = total - counter;
     const secondsRemaining = (5 + sleepSecondsAfterEachRoom) * roomsRemaining;
-    const timeString = humanizeDuration(secondsRemaining * 1000);
-    return `Time remaining: At least ${timeString}`;
+    return `Time remaining: At least ${humanizeDuration(secondsRemaining * 1000)}`;
 };
 
 /**
@@ -151,9 +138,7 @@ const processRooms = async (rooms) => {
     const roomCount = rooms.length;
     let counter = 0;
 
-    console.log(
-        `${roomCount} rooms loaded. ${timeRemaining(roomCount, 0)}\n\n`,
-    );
+    console.log(`${roomCount} rooms loaded. ${timeRemaining(roomCount, 0)}\n\n`);
 
     for (const roomId of rooms) {
         counter += 1;
@@ -185,6 +170,7 @@ const processRooms = async (rooms) => {
                 'get',
                 `/_synapse/admin/v1/rooms/${roomId}/members`,
             );
+
             deletedRooms[roomId].roomMembers = members;
             writeLog(deletedRooms);
         }
@@ -197,6 +183,7 @@ const processRooms = async (rooms) => {
                 'get',
                 `/_synapse/admin/v1/rooms/${roomId}/state`,
             );
+
             deletedRooms[roomId].roomState = state;
             writeLog(deletedRooms);
         }
@@ -241,10 +228,7 @@ const processRooms = async (rooms) => {
                 // might take a long time. No point in checking every 5 seconds
                 // for 15 minutes
                 delaySeconds += 5;
-                console.log(
-                    `Waiting ${humanizeDuration(delaySeconds * 1000)} for ` +
-                        `${roomId} to complete purge`,
-                );
+                console.log(`Waiting ${humanizeDuration(delaySeconds * 1000)} for ${roomId} to complete purge`);
                 sleep(delaySeconds);
 
                 deletionStatus = await adminApi(
@@ -257,8 +241,7 @@ const processRooms = async (rooms) => {
                 if (!deletionStatus.success) {
                     console.log(
                         `Error getting delete status for room ${roomId}. ` +
-                            `Script is not waiting for this to finish. ` +
-                            `${deletionStatus.data}`,
+                            `Script is not waiting for this to finish. ${deletionStatus.data}`,
                     );
                     break;
                 }
@@ -272,17 +255,15 @@ const processRooms = async (rooms) => {
         const percent = ((counter / roomCount) * 100).toFixed();
 
         let delay = true;
-        let sleepMsg =
-            `Sleeping ${humanizeDuration(sleepSecondsAfterEachRoom * 1000)} ` +
-            'to allow Synapse to catch up and not die. ';
+        const durationString = humanizeDuration(sleepSecondsAfterEachRoom * 1000);
+        let sleepMsg = `Sleeping ${durationString} to allow Synapse to catch up and not die. `;
         if (counter === roomCount) {
             sleepMsg = '';
             delay = false;
         }
 
         console.log(
-            `Finished with room ${roomId}. ${sleepMsg}` +
-                `${percent}% done. ${timeRemaining(roomCount, counter)}\n\n`,
+            `Finished with room ${roomId}. ${sleepMsg}${percent}% done. ${timeRemaining(roomCount, counter)}\n\n`,
         );
 
         if (delay) {
