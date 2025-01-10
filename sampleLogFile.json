@@ -1,0 +1,88 @@
+{
+    "!TTAJIVNoKPIVCPmyTg:example.com": {
+        "roomSummary": {
+            "time": "2025-01-09T17:02:25.733Z",
+            "endpoint": "GET /_synapse/admin/v1/rooms/!TTAJIVNoKPIVCPmyTg:example.com {}",
+            "success": true,
+            "message": "Successfully got room summary",
+            "data": {
+                "room_id": "!TTAJIVNoKPIVCPmyTg:example.com",
+                "name": "Test room",
+                "canonical_alias": null,
+                "joined_members": 1,
+                "join_rules": "public",
+                "guest_access": "can_join",
+                "history_visibility": "world_readable",
+                "state_events": 8,
+                "avatar": null,
+                "topic": null,
+                "room_type": null,
+                "joined_local_members": 1,
+                "version": "10",
+                "creator": "@twilight:example.com",
+                "encryption": null,
+                "federatable": true,
+                "public": false,
+                "joined_local_devices": 13,
+                "forgotten": false
+            }
+        },
+        "roomMembers": {
+            "time": "2025-01-09T17:02:25.864Z",
+            "endpoint": "GET /_synapse/admin/v1/rooms/!TTAJIVNoKPIVCPmyTg:example.com/members {}",
+            "success": true,
+            "message": "Successfully fetched room members",
+            "data": {
+                "members": [
+                    "@twilight:example.com"
+                ],
+                "total": 1
+            }
+        },
+        "roomState": {
+            "time": "2025-01-09T17:02:25.878Z",
+            "endpoint": "GET /_synapse/admin/v1/rooms/!TTAJIVNoKPIVCPmyTg:example.com/state {}",
+            "success": true,
+            "message": "Successfully fetched room state",
+            "data": {
+                "state": ["<normal full room state>"]
+            }
+        },
+        "mediaQuarantineResult": {
+            "time": "2025-01-09T17:02:25.894Z",
+            "endpoint": "POST /_matrix/media/unstable/admin/quarantine/room/!TTAJIVNoKPIVCPmyTg:example.com {}",
+            "success": true,
+            "message": "Successfully quarantined room media",
+            "data": {
+                "num_quarantined": 15
+            }
+        },
+        "roomDeleteResult": {
+            "time": "2025-01-09T17:02:25.920Z",
+            "endpoint": "DELETE /_synapse/admin/v2/rooms/!TTAJIVNoKPIVCPmyTg:example.com {\"block\":true,\"purge\":true}",
+            "success": true,
+            "message": "Successfully deleted the room",
+            "data": {
+                "delete_id": "AqFzRnlWoHMcEEkM"
+            }
+        },
+        "roomDeleteStatus": {
+            "time": "2025-01-09T17:02:30.941Z",
+            "endpoint": "GET /_synapse/admin/v2/rooms/delete_status/AqFzRnlWoHMcEEkM {}",
+            "success": true,
+            "message": "Successfully got delete status for room",
+            "data": {
+                "delete_id": "AqFzRnlWoHMcEEkM",
+                "status": "complete",
+                "shutdown_room": {
+                    "kicked_users": [
+                        "@twilight:example.com"
+                    ],
+                    "failed_to_kick_users": [],
+                    "local_aliases": [],
+                    "new_room_id": null
+                }
+            }
+        }
+    }
+}
