@@ -12,26 +12,16 @@ const roomCount = 5;
  * @param {Number} seconds Number of seconds to sleep
  */
 const sleep = (seconds) => {
-    Atomics.wait(
-        new Int32Array(new SharedArrayBuffer(4)),
-        0,
-        0,
-        seconds * 1000,
-    );
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, seconds * 1000);
 };
 
 const main = async () => {
-    const { serverUrl, userToken } = JSON.parse(
-        fs.readFileSync(`${__dirname}/config.json`),
-    );
+    const { serverUrl, userToken } = JSON.parse(fs.readFileSync(`${__dirname}/config.json`));
 
     let now = new Date();
     now = now.toISOString();
 
-    const headers = {
-        Authorization: `Bearer ${userToken}`,
-        'Content-Type': 'application/json',
-    };
+    const headers = { Authorization: `Bearer ${userToken}`, 'Content-Type': 'application/json' };
     const dataTemplate = (n) => {
         return {
             name: `${now}-${String(n)}`,
@@ -39,10 +29,7 @@ const main = async () => {
         };
     };
 
-    const matrix = axios.create({
-        baseURL: `${serverUrl}/_matrix/client`,
-        headers,
-    });
+    const matrix = axios.create({ baseURL: `${serverUrl}/_matrix/client`, headers });
 
     for (let n = 1; n <= roomCount; n++) {
         if (n > 1) {
@@ -56,10 +43,7 @@ const main = async () => {
             console.debug(err);
             process.exit(1);
         }
-        console.log(
-            `Created room ${n} out of ${roomCount}. Name: ${data.name}. ` +
-                `ID: ${result.data.room_id}`,
-        );
+        console.log(`Created room ${n} out of ${roomCount}. Name: ${data.name}. ID: ${result.data.room_id}`);
     }
 };
 
