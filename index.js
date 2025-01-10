@@ -222,13 +222,18 @@ const processRooms = async (rooms) => {
         if (deleteId && live) {
             let deletionStatus = { data: { status: 'not started' } };
             let delaySeconds = 0;
+            let deleteWaitTime = 0;
             do {
                 // Gradually wait longer and longer in between checking the
                 // delete status. If it's not done relatively quick, it
                 // might take a long time. No point in checking every 5 seconds
                 // for 15 minutes
                 delaySeconds += 5;
-                console.log(`Waiting ${humanizeDuration(delaySeconds * 1000)} for ${roomId} to complete purge`);
+                deleteWaitTime += delaySeconds;
+                console.log(
+                    `Waiting ${humanizeDuration(delaySeconds * 1000)} for ${roomId} to complete purge. ` +
+                        `Total wait time: ${humanizeDuration(deleteWaitTime * 1000)}`,
+                );
                 sleep(delaySeconds);
 
                 deletionStatus = await adminApi(
@@ -263,7 +268,8 @@ const processRooms = async (rooms) => {
         }
 
         console.log(
-            `Finished with room ${roomId}. ${sleepMsg}${percent}% done. ${timeRemaining(roomCount, counter)}\n\n`,
+            `Finished with room ${roomId}. ${sleepMsg}${percent}% done.\n${timeRemaining(roomCount, counter)}. ` +
+                `This does not account for time spent waiting for rooms to complete shutdown\n\n`,
         );
 
         if (delay) {
