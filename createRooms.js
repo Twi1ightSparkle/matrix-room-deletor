@@ -43,6 +43,7 @@ const main = async () => {
             console.debug(err);
             process.exit(1);
         }
+        fs.appendFileSync(`${__dirname}/rooms.txt`, `${result.data.room_id}\n`);
         console.log(`Created room ${n} out of ${roomCount}. Name: ${data.name}. ID: ${result.data.room_id}`);
     }
 };
