@@ -1,5 +1,7 @@
 config.json
+config copy*.json
 rooms.txt
+rooms copy*.txt
 rooms-log-*.json
 
 # Logs

@@ -16,6 +16,8 @@ Synapse media repo. `mmrSharedSecret` also required when
 `doNotDeleteRoom` is a development option. When enabled, rooms will not be
 deleted when `--live` is passed.
 
+See `sampleLogFile.json` for the data structure of the generated log file.
+
 By default, the script runs in test mode and calls the
 [Room Details API](https://matrix-org.github.io/synapse/latest/admin_api/rooms.html#room-details-api)
 instead of the Delete API. Useful to verify your room list. Call `index.js`

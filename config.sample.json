@@ -6,5 +6,6 @@
     "saveRoomMembers": true,
     "saveRoomState": true,
     "serverUrl": "https://synapse.example.com",
+    "sleepSecondsAfterEachRoom": 30,
     "userToken": "syt_efgh"
 }
